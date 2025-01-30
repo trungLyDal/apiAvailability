@@ -1,6 +1,10 @@
 import requests
 import time
 from plyer import notification
+import datetime
+
+current_time = datetime.datetime.now()
+counter = 0
 
 def send_notification(title, message):
     notification.notify(
@@ -16,11 +20,11 @@ def check_api_availability():
     try:
         response = requests.get(api_url)
         if response.status_code == 200:
-            print("API is available.")
+            print("API is available." + " Current time: ", current_time, counter+1)
         else:
             print(f"API returned status code: {response.status_code}. Redirecting to {redirect_url}")
             send_notification("API Unavailable", f"API returned status code: {response.status_code}. Redirecting to {redirect_url}")
-            print("Try again later")
+            print("Try again later. Current time: ", current_time, counter+1)
     except requests.exceptions.RequestException as e:
         print(f"Error occurred: {e}. Redirecting to {redirect_url}")
         send_notification("API Error", f"Error occurred: {e}. Redirecting to {redirect_url}")
